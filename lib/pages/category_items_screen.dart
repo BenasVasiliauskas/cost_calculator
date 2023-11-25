@@ -50,6 +50,12 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
   TextEditingController hourlyRateConstructionRemodelingController =
       TextEditingController();
 
+  //used in     Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
+  double calculateCostPainting(int index) {
+    double laborCost = widget.laborHours2[index];
+    return laborCost * hourlyRatePainting;
+  }
+
   double calculateMaterialQuantity(int index) {
     double quantity = widget.quantity[index];
     return quantity * calculationQuantity;
@@ -261,7 +267,7 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
                   // Recalculate and update the labor cost when quantity changes
                   widget.laborCost[i] = calculateJobCost(i);
                   laborCostControllers[i].text =
-                      calculateJobCost(i).toStringAsFixed(2);
+                      calculateCostPainting(i).toStringAsFixed(2);
 
                   // Recalculate and update the material 2 when quantity changes
                   widget.material2[i] = calculateMaterialCost(i);
