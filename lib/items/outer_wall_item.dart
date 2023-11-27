@@ -1,9 +1,9 @@
-import '/pages/category_items_screen.dart';
-import 'pages/norw_category_items_screen.dart';
+import '../pages/exterior_wall_items_screen.dart';
+import '../pages/norw_exterior_wall_items_screen.dart';
 import 'package:flutter/material.dart';
-import 'constants/language.dart';
+import '../constants/language.dart';
 
-class CategoryItem extends StatelessWidget {
+class OuterWallItem extends StatelessWidget {
   final String name;
   final List<String> description;
   final List<String> unit;
@@ -17,7 +17,7 @@ class CategoryItem extends StatelessWidget {
   final List<double> totalPrice;
   final Color color;
 
-  CategoryItem(
+  OuterWallItem(
     this.name,
     this.description,
     this.unit,
@@ -37,7 +37,7 @@ class CategoryItem extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) {
           return languageEnglish == true
-              ? CategoryItemsScreen(
+              ? ExteriorWallItemsScreen(
                   name,
                   description,
                   unit,
@@ -51,6 +51,7 @@ class CategoryItem extends StatelessWidget {
                   totalPrice,
                 )
               : NorwCategoryItemsScreen(
+                  // change to NorwOuterWallScreen(
                   name,
                   description,
                   unit,

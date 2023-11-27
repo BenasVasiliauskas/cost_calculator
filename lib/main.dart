@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/categories_screen.dart';
+import 'pages/interior_wall_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,11 +29,11 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
             )),
       ),
-      home: CategoriesScreen(),
+      home: InnerWallScreen(),
       initialRoute: '/',
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (ctx) => CategoriesScreen(),
+          builder: (ctx) => InnerWallScreen(),
         );
       },
     );

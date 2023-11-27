@@ -1,17 +1,17 @@
 import 'package:cost_calculator/data/data.dart';
 import 'package:cost_calculator/data/norw_data.dart';
 
-import '/category_item.dart';
+import '../items/inner_wall_item.dart';
 import 'package:flutter/material.dart';
 import '../constants/language.dart';
 import '../widgets/custom_drawer.dart';
 
-class CategoriesScreen extends StatefulWidget {
+class InnerWallScreen extends StatefulWidget {
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  State<InnerWallScreen> createState() => _InnerWallScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _InnerWallScreenState extends State<InnerWallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +29,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       body: languageEnglish == true
           ? GridView.count(
               padding: const EdgeInsets.all(25),
-              children: data
+              children: dataInnerWallData
                   .map(
-                    (catData) => CategoryItem(
+                    (catData) => InnerWallItem(
                       catData.name,
                       catData.description,
                       catData.unit,
@@ -53,9 +53,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             )
           : GridView.count(
               padding: const EdgeInsets.all(25),
-              children: norwData
+              children: norwInnerWallData
                   .map(
-                    (catData) => CategoryItem(
+                    (catData) => InnerWallItem(
                       catData.name,
                       catData.description,
                       catData.unit,

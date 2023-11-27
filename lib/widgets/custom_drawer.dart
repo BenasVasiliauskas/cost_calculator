@@ -1,7 +1,6 @@
-import '/pages/categories_screen.dart';
+import '../pages/exterior_wall_screen.dart';
+import '../pages/interior_wall_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/deck_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   final bool languageEnglish;
@@ -35,7 +34,7 @@ class CustomDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) {
-                    return CategoriesScreen();
+                    return InnerWallScreen();
                   },
                 ),
               );
@@ -45,7 +44,15 @@ class CustomDrawer extends StatelessWidget {
             title: languageEnglish == true
                 ? Text('Exterior walls')
                 : Text('Yttervegger'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ExteriorWallScreen();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             title: languageEnglish == true
