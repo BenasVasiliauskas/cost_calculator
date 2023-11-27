@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'categories_screen.dart';
 import '../constants/language.dart';
+import '../widgets/custom_drawer.dart';
 
 class DeckScreen extends StatefulWidget {
   @override
@@ -11,57 +11,13 @@ class _DeckScreenState extends State<DeckScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            SizedBox(
-              height: 96,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: languageEnglish == true
-                    ? Text('Category navigation')
-                    : Text('Kategori navigering'),
-              ),
-            ),
-            ListTile(
-              title: languageEnglish == true
-                  ? Text('Interior walls')
-                  : Text('Innvendige vegger'),
-              onTap: () {
-                // Navigate to CategoriesScreen when Interior walls is tapped
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => CategoriesScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: languageEnglish == true ? Text('Test') : Text('Test norw'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: languageEnglish == true
-                  ? Text("Language options")
-                  : Text("Språkvalg"),
-              subtitle: Column(
-                children: [
-                  Switch(
-                    value: languageEnglish,
-                    onChanged: (value) {
-                      setState(() {
-                        languageEnglish = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+      drawer: CustomDrawer(
+        languageEnglish: languageEnglish,
+        onLanguageChanged: (value) {
+          setState(() {
+            languageEnglish = value;
+          });
+        },
       ),
       appBar: AppBar(
         title: const Text('Bygg Kalk'),
