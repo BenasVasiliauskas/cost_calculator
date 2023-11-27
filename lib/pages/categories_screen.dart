@@ -97,7 +97,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         title: const Text('Bygg Kalk'),
       ),
       body: languageEnglish == true
-          ? GridView(
+          ? GridView.count(
               padding: const EdgeInsets.all(25),
               children: data
                   .map(
@@ -117,14 +117,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     ),
                   )
                   .toList(),
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
+              crossAxisCount: 1,
+              mainAxisSpacing: 20,
+              childAspectRatio: 7 / 2,
             )
-          : GridView(
+          : GridView.count(
               padding: const EdgeInsets.all(25),
               children: norwData
                   .map(
@@ -144,12 +141,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     ),
                   )
                   .toList(),
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
+              crossAxisCount: 1,
+              mainAxisSpacing: 20,
+              childAspectRatio: 7 / 2,
             ),
     );
   }
