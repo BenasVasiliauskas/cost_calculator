@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import '../constants/innerwall_constants.dart';
 
 class InteriorWallItemsScreen extends StatefulWidget {
@@ -46,10 +47,14 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   List<TextEditingController> material1Controllers = [];
   List<TextEditingController> material2Controllers = [];
   List<TextEditingController> totalPriceControllers = [];
+
+  //
   TextEditingController quantityCalculationControllers =
       TextEditingController();
   TextEditingController hourlyRateConstructionRemodelingController =
       TextEditingController();
+  //
+  List<TextEditingController> customColumnControllers = [];
 
   //used in     Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
   double calculateCostPainting(int index) {
@@ -63,8 +68,13 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   }
 
   double calculateWorkHours2(int index) {
-    double laborHours1 = widget.laborHours1[index];
-    return laborHours1 * calculationQuantity;
+    if (customColumn) {
+      double laborHours1 = testList[index];
+      return laborHours1 * calculationQuantity;
+    } else {
+      double laborHours1 = widget.laborHours1[index];
+      return laborHours1 * calculationQuantity;
+    }
   }
 
   double calculateJobCost(int index) {
@@ -95,9 +105,10 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
     });
 
     // Calculate the total sum values
-    double totalQuantity = 0.0;
-    double totalMaterialQuantity = 0.0;
+
     double totalLaborHours1 = 0.0;
+    //
+    double totalCustomColumn = 0.0;
     double totalLaborHours2 = 0.0;
     double totalLaborCost = 0.0;
     double totalMaterial1 = 0.0;
@@ -105,9 +116,9 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
     double totalTotalPrice = 0.0;
 
     for (int i = 0; i < widget.description.length; i++) {
-      totalQuantity += widget.quantity[i];
-      totalMaterialQuantity += widget.materialQuantity[i];
       totalLaborHours1 += widget.laborHours1[i];
+      //
+      totalCustomColumn += testList[i];
       totalLaborHours2 += widget.laborHours2[i];
       totalLaborCost += widget.laborCost[i];
       totalMaterial1 += widget.material1[i];
@@ -133,19 +144,25 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
         DataCell(
           Container(
             width: 100,
-            child: Text(totalQuantity.toStringAsFixed(2)),
+            child: Text(''),
           ),
         ),
         DataCell(
           Container(
             width: 150,
-            child: Text(totalMaterialQuantity.toStringAsFixed(2)),
+            child: Text(''),
           ),
         ),
         DataCell(
           Container(
             width: 100,
             child: Text(totalLaborHours1.toStringAsFixed(2)),
+          ),
+        ),
+        DataCell(
+          Container(
+            width: 100,
+            child: Text(totalCustomColumn.toStringAsFixed(2)),
           ),
         ),
         DataCell(
@@ -210,6 +227,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       material1Controllers.add(TextEditingController());
       material2Controllers.add(TextEditingController());
       totalPriceControllers.add(TextEditingController());
+      customColumnControllers.add(TextEditingController());
     }
 
     // Set the initial values from widget data to controllers
@@ -225,6 +243,8 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       material1Controllers[i].text = widget.material1[i].toStringAsFixed(2);
       material2Controllers[i].text = widget.material2[i].toStringAsFixed(2);
       totalPriceControllers[i].text = widget.totalPrice[i].toStringAsFixed(2);
+      customColumnControllers[i].text =
+          widget.laborHours2[i].toStringAsFixed(2);
     }
     quantityCalculationControllers.text =
         calculationQuantity.toStringAsFixed(2);
@@ -260,10 +280,16 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
                   widget.materialQuantity[i] = calculateMaterialQuantity(i);
                   materialQuantityControllers[i].text =
                       calculateMaterialQuantity(i).toStringAsFixed(2);
-                  // Recalculate and update the labor hours 2 when quantity changes
-                  widget.laborHours2[i] = calculateWorkHours2(i);
-                  laborHours2Controllers[i].text =
-                      calculateWorkHours2(i).toStringAsFixed(2);
+
+                  if (customColumn) {
+                    widget.laborHours2[i] = calculateWorkHours2(i);
+                    customColumnControllers[i].text =
+                        testList[i].toStringAsFixed(2);
+                  } else {
+                    widget.laborHours2[i] = calculateWorkHours2(i);
+                    laborHours2Controllers[i].text =
+                        calculateWorkHours2(i).toStringAsFixed(2);
+                  }
 
                   // Recalculate and update the labor cost when quantity changes
                   widget.laborCost[i] = calculateJobCost(i);
@@ -293,6 +319,12 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
             onChanged: (value) {
               hourlyRateConstructionRemodeling = double.parse(value);
               for (int i = 0; i < widget.description.length; i++) {
+                //
+                testList[i] = double.parse(customColumnControllers[i].text);
+                customColumnControllers[i].text =
+                    testList[i].toStringAsFixed(2);
+                //
+
                 // Recalculate and update the labor cost when hourlyRateConstructionRemodeling changes
                 widget.laborCost[i] = calculateJobCost(i);
                 laborCostControllers[i].text =
@@ -369,6 +401,23 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
         ),
       ),
       DataColumn(
+          label: SizedBox(
+        width: customColumn ? 100 : 35, // Set the width as needed
+        child: TextButton(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+          ),
+          onPressed: () {
+            setState(() {
+              customColumn = !customColumn;
+              rebuildDataTable();
+            });
+          },
+          child: customColumn ? Text("Custom hours") : Text("+"),
+        ),
+      )),
+      DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
           child: Text('Hours2'),
@@ -430,24 +479,6 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
               TextField(
                 readOnly: true,
                 controller: quantityControllers[i],
-                // onChanged: (value) {
-                //   // Handle changes to the quantity
-                //   double parsedValue = double.parse(value);
-                //   widget.quantity[i] = double.parse(parsedValue
-                //       .toStringAsFixed(2)); // Update the widget quantity
-
-                //   // Recalculate and update the material quantity when quantity changes
-                //   widget.materialQuantity[i] = calculateMaterialQuantity(
-                //       i); // Update widget.materialQuantity
-                //   materialQuantityControllers[i].text = widget
-                //       .materialQuantity[i]
-                //       .toStringAsFixed(2); // Format to 2 decimal places
-
-                //   // Update total sum values
-                //   rebuildDataTable();
-                // },
-                // keyboardType: TextInputType.numberWithOptions(
-                //     decimal: true), // Allow decimal numbers
               ),
             ),
             DataCell(
@@ -464,35 +495,20 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
               TextField(
                 readOnly: true,
                 controller: laborHours1Controllers[i],
+                onChanged: (value) {},
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true), // Allow decimal numbers
+              ),
+            ),
+            DataCell(
+              TextField(
+                readOnly: !customColumn,
+                controller: customColumnControllers[i],
                 onChanged: (value) {
-                  // // Handle changes to labor hours 1
-                  // double parsedValue = double.parse(value);
-                  // widget.laborHours1[i] =
-                  //     double.parse(parsedValue.toStringAsFixed(2));
-
-                  // // Calculate and update labor hours 2
-                  // double updatedLaborHours2 = calculateWorkHours2(i);
-                  // widget.laborHours2[i] = updatedLaborHours2;
-                  // // Update the laborHours2 text field with the newly calculated value
-                  // laborHours2Controllers[i].text =
-                  //     updatedLaborHours2.toStringAsFixed(2);
-
-                  // // Recalculate and update the labor cost when labor hours 1 changes
-                  // double updatedLaborCost = calculateJobCost(i);
-                  // widget.laborCost[i] = updatedLaborCost;
-                  // // Update the laborCost text field with the newly calculated value
-                  // laborCostControllers[i].text =
-                  //     updatedLaborCost.toStringAsFixed(2);
-
-                  // //Recalculate total price
-                  // double updatedTotalPrice = calculateTotalPrice(i);
-                  // widget.totalPrice[i] = updatedTotalPrice;
-                  // // Update the totalPrice text field with the newly calculated value
-                  // totalPriceControllers[i].text =
-                  //     calculateTotalPrice(i).toStringAsFixed(2);
-
-                  // //Rebuild the data table
-                  // rebuildDataTable();
+                  double parsedValue = double.parse(value);
+                  testList[i] = double.parse(parsedValue
+                      .toStringAsFixed(2)); // Format to 2 decimal places
+                  rebuildDataTable();
                 },
                 keyboardType: TextInputType.numberWithOptions(
                     decimal: true), // Allow decimal numbers
@@ -633,6 +649,13 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
             child: Text(totalLaborHours1.toStringAsFixed(2)),
           ),
         ),
+        DataCell(Container(
+          width: 100,
+          child: Text(
+            // calc custom hours
+            testList.sum.toStringAsFixed(2),
+          ),
+        )),
         DataCell(
           Container(
             width: 100,
@@ -678,14 +701,20 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
         child: Column(
           children: [
             SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                dataRowMaxHeight: double.infinity,
-                dataRowMinHeight: 60,
-                columns: columns, // Define your columns here
-                rows: rows,
-              ),
-            ),
+                scrollDirection: Axis.horizontal,
+                child: customColumn == true
+                    ? DataTable(
+                        dataRowMaxHeight: double.infinity,
+                        dataRowMinHeight: 60,
+                        columns: columns, // Define your columns here
+                        rows: rows,
+                      )
+                    : DataTable(
+                        dataRowMaxHeight: double.infinity,
+                        dataRowMinHeight: 60,
+                        columns: columns, // Define your columns here
+                        rows: rows,
+                      )),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
