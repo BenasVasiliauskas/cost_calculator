@@ -212,10 +212,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
     rebuildDataTable(); // Call the method to rebuild the DataTable
   }
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize controllers with empty controllers
+  void initialiseStates() {
     for (int i = 0; i < widget.description.length; i++) {
       descriptionControllers.add(TextEditingController());
       unitControllers.add(TextEditingController());
@@ -229,8 +226,9 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       totalPriceControllers.add(TextEditingController());
       customColumnControllers.add(TextEditingController());
     }
+  }
 
-    // Set the initial values from widget data to controllers
+  void setInitialValues() {
     for (int i = 0; i < widget.description.length; i++) {
       descriptionControllers[i].text = widget.description[i];
       unitControllers[i].text = widget.unit[i];
@@ -254,11 +252,19 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize controllers with empty controllers
+    initialiseStates();
+
+    // Set the initial values from widget data to controllers
+    setInitialValues();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<DataColumn> calculationColumns = [
-      DataColumn(
-          label: Text(
-              'Calculation Quantity')), //DataColumn(label: calculationQuantity == 0? Text('Calculation Quantity'): Text('Other text')),
+      DataColumn(label: Text('Calculation Quantity')),
       DataColumn(label: Text('Hourly Rate - Construction/Remodeling')),
       DataColumn(label: Text('Hourly Rate - Demolition')),
       DataColumn(label: Text('Hourly Rate - Painting')),
@@ -280,16 +286,15 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
                   widget.materialQuantity[i] = calculateMaterialQuantity(i);
                   materialQuantityControllers[i].text =
                       calculateMaterialQuantity(i).toStringAsFixed(2);
+                  // aaaa
 
-                  if (customColumn) {
-                    widget.laborHours2[i] = calculateWorkHours2(i);
-                    customColumnControllers[i].text =
-                        testList[i].toStringAsFixed(2);
-                  } else {
-                    widget.laborHours2[i] = calculateWorkHours2(i);
-                    laborHours2Controllers[i].text =
-                        calculateWorkHours2(i).toStringAsFixed(2);
-                  }
+                  widget.laborHours2[i] = calculateWorkHours2(i);
+                  laborHours2Controllers[i].text =
+                      calculateWorkHours2(i).toStringAsFixed(2);
+
+                  widget.laborCost[i] = calculateJobCost(i);
+                  laborCostControllers[i].text =
+                      calculateJobCost(i).toStringAsFixed(2);
 
                   // Recalculate and update the labor cost when quantity changes
                   widget.laborCost[i] = calculateJobCost(i);
@@ -397,7 +402,9 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Hours'),
+          child: Text('Hours',
+              style:
+                  TextStyle(color: customColumn ? Colors.grey : Colors.black)),
         ),
       ),
       DataColumn(
@@ -438,7 +445,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material'), // this
+          child: Text('Material cost'), // this
         ),
       ),
       DataColumn(
@@ -493,22 +500,43 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
             ),
             DataCell(
               TextField(
+                style:
+                    TextStyle(color: customColumn ? Colors.grey : Colors.black),
                 readOnly: true,
                 controller: laborHours1Controllers[i],
                 onChanged: (value) {},
                 keyboardType: TextInputType.numberWithOptions(
                     decimal: true), // Allow decimal numbers
               ),
-            ),
+            ), // custom column cell
             DataCell(
               TextField(
+                style:
+                    TextStyle(color: customColumn ? Colors.black : Colors.grey),
                 readOnly: !customColumn,
                 controller: customColumnControllers[i],
                 onChanged: (value) {
                   double parsedValue = double.parse(value);
                   testList[i] = double.parse(parsedValue
                       .toStringAsFixed(2)); // Format to 2 decimal places
-                  rebuildDataTable();
+                  // Recalculate and update the labor hours 2 when labor hours 1 changes need changes
+                  // aaaa
+                  widget.laborHours2[i] = calculateWorkHours2(i);
+                  laborHours2Controllers[i].text =
+                      calculateWorkHours2(i).toStringAsFixed(2);
+
+                  // Recalculate and update the labor cost when labor hours 2 changes
+                  widget.laborCost[i] = calculateJobCost(i);
+                  laborCostControllers[i].text =
+                      calculateJobCost(i).toStringAsFixed(2);
+
+                  // Recalculate and update the total price when labor hours 2 changes
+                  widget.totalPrice[i] = calculateTotalPrice(i);
+                  totalPriceControllers[i].text =
+                      calculateTotalPrice(i).toStringAsFixed(2);
+
+                  //total sum doesnt get updated
+                  updateTotalSum();
                 },
                 keyboardType: TextInputType.numberWithOptions(
                     decimal: true), // Allow decimal numbers
@@ -646,14 +674,16 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
         DataCell(
           Container(
             width: 100,
-            child: Text(totalLaborHours1.toStringAsFixed(2)),
+            child:
+                Text(customColumn ? '' : totalLaborHours1.toStringAsFixed(2)),
           ),
         ),
         DataCell(Container(
           width: 100,
           child: Text(
             // calc custom hours
-            testList.sum.toStringAsFixed(2),
+            customColumn ? testList.sum.toStringAsFixed(2) : '',
+            //need to recalc labor cost and use that in total sum if enabled
           ),
         )),
         DataCell(

@@ -361,19 +361,19 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
       DataColumn(
         label: SizedBox(
           width: 150, // Set the width as needed
-          child: Text('Material mengde'),
+          child: Text('Mengde av material'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Timeverk'),
+          child: Text('Enh. tid.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Timeverk'),
+          child: Text('Sum. tid.'),
         ),
       ),
       DataColumn(
@@ -385,13 +385,13 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material'),
+          child: Text('Enh. mater.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material'), // this
+          child: Text('Sum. material'), // this
         ),
       ),
       DataColumn(
