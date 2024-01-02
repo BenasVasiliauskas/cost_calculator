@@ -1,4 +1,6 @@
+import 'package:cost_calculator/models/kitchen_data_model.dart';
 import 'package:cost_calculator/models/outer_wall_data_model.dart';
+import 'package:cost_calculator/models/parquet_laminate_data_model.dart';
 import 'package:cost_calculator/models/windows_exterior_doors_model.dart';
 
 import '../models/inner_door_data_model.dart';
@@ -841,7 +843,103 @@ final norwInnerWallData = [
   //     totalPrice: totalPrice)
 ];
 
-final norwInnerDoorData = [
+final norwKitchen = [
+  KitchenModel(
+    name: "Innredning i bolig, kjøkken overskap",
+    description: [
+      "Overskap furu 1 dør",
+      "Kjøkkenknotter pors. hvit",
+      "Lyslist overskap, profilert furu (2,4 lm)",
+      "Tillpassningstykke kjøkken eik folie",
+      "Overskap furu krydderhylle",
+      "Ventilator kjøkken for vegg",
+      "Overskap furu 2 dører",
+      "Overskap furu 1 dør",
+    ],
+    unit: [
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+    ],
+    quantity: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    laborHours1: [
+      0.71,
+      0.07,
+      0.25,
+      0.18,
+      0.81,
+      0.77,
+      0.81,
+      0.72,
+    ],
+    laborHours2: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    laborCost: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    material: [
+      1397.80,
+      94.80,
+      525.20,
+      302.76,
+      1620.00,
+      12777.20,
+      2160.00,
+      1260.00,
+    ],
+    materials: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    totalPrice: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+  )
+];
+
+final norwInnerDoor = [
   InnerDoorModel(
     name: "Innerdør, furu 9x21",
     description: [
@@ -851,13 +949,13 @@ final norwInnerDoorData = [
       "Dytteremse rundt dør",
       "Feielist, eik lakkert, 9x20mm",
       "Feielist, eik lakkert, 9x30mm",
-      "Dørvrider Innerdør",
-      "Karmlist furu, ferdig malt"
+      "Dørvrider Innerdør	",
+      "Karmlist furu, ferdig malt",
     ],
     unit: [
       "stk",
       "stk",
-      "lm",
+      "m",
       "lm",
       "lm",
       "lm",
@@ -884,13 +982,84 @@ final norwInnerDoorData = [
       0.30,
       1.06,
     ],
-    laborHours2: [],
-    laborCost: [],
-    material: [],
-    materials: [],
-    totalPrice: [],
-  ),
+    laborHours2: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    laborCost: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    material: [
+      1685.42,
+      162.05,
+      299.07,
+      78.32,
+      41.70,
+      62.56,
+      391.20,
+      507.85,
+    ],
+    materials: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    totalPrice: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+  )
 ];
+
+final norwParquetAndLaminate = [
+  ParquetAndLaminateModel(
+      name: "Overflate dekker parkett",
+      description: ["Parkett på undergulv, eik"],
+      unit: ["m²"],
+      quantity: [0.00],
+      laborHours1: [0.36],
+      laborHours2: [0.00],
+      laborCost: [0.00],
+      material: [528.30],
+      materials: [0.00],
+      totalPrice: [0.00]),
+  ParquetAndLaminateModel(
+      name: "Overflate dekker parkett",
+      description: ["Parkett på undergulv, eik"],
+      unit: ["m²"],
+      quantity: [0.00],
+      laborHours1: [0.25],
+      laborHours2: [0.00],
+      laborCost: [0.00],
+      material: [0.00],
+      materials: [0.00],
+      totalPrice: [0.00]),
+];
+
 final norwWindowsExteriorDoors = [
   WindowsAndExteriorDoorsModel(
     name: "Vindu, trevegg toppsving 12x10",

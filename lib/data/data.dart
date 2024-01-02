@@ -1,3 +1,6 @@
+import 'package:cost_calculator/models/inner_door_data_model.dart';
+import 'package:cost_calculator/models/kitchen_data_model.dart';
+import 'package:cost_calculator/models/parquet_laminate_data_model.dart';
 import 'package:cost_calculator/models/windows_exterior_doors_model.dart';
 
 import '../models/inner_wall_data_model.dart';
@@ -844,6 +847,224 @@ final dataInnerWallData = [
   //     material2: material2,
   //     totalPrice: totalPrice)
 ];
+
+final kitchenData = [
+  KitchenModel(
+    name: "Interior design in housing, kitchen cabinets",
+    description: [
+      "Wall cabinet pine 1 door",
+      "Kitchen knobs porcelain white",
+      "Light strip cabinet, profiled pine (2,4 lm)",
+      "Fitting piece kitchen oak foil",
+      "Wall cabinet pine spice rack",
+      "Ventilator kitchen for wall",
+      "Cabinet pine 2 doors",
+      "Cabinet pine 1 door",
+    ],
+    unit: [
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+      "stk",
+    ],
+    quantity: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    laborHours1: [
+      0.71,
+      0.07,
+      0.25,
+      0.18,
+      0.81,
+      0.77,
+      0.81,
+      0.72,
+    ],
+    laborHours2: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    laborCost: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    material: [
+      1397.80,
+      94.80,
+      525.20,
+      302.76,
+      1620.00,
+      12777.20,
+      2160.00,
+      1260.00,
+    ],
+    materials: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    totalPrice: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+  )
+];
+
+final innerDoor = [
+  InnerDoorModel(
+    name: "Interior door, pine 9x21",
+    description: [
+      "Interior door Pine",
+      "Openings in timber frame, 1-2 m²",
+      "Lining pine door/window",
+      "Dytteremse around door",
+      "Feielist, oak lacquered, 9x20mm",
+      "Feielist, oak lacquered, 9x30mm",
+      "Door winder inner door",
+      "Frame strip pine, pre-painted",
+    ],
+    unit: [
+      "stk",
+      "stk",
+      "m",
+      "lm",
+      "lm",
+      "lm",
+      "stk",
+      "lm",
+    ],
+    quantity: [
+      1.00,
+      1.00,
+      5.10,
+      11.00,
+      0.90,
+      0.90,
+      1.00,
+      10.60,
+    ],
+    laborHours1: [
+      1.00,
+      0.35,
+      0.51,
+      0.11,
+      0.09,
+      0.09,
+      0.30,
+      1.06,
+    ],
+    laborHours2: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    laborCost: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    material: [
+      1685.42,
+      162.05,
+      299.07,
+      78.32,
+      41.70,
+      62.56,
+      391.20,
+      507.85,
+    ],
+    materials: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+    totalPrice: [
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+      0.00,
+    ],
+  )
+];
+
+final parquetAndLaminate = [
+  ParquetAndLaminateModel(
+      name: "Surface covering parquet",
+      description: ["Parquet on subfloor, oak"],
+      unit: ["m²"],
+      quantity: [0.00],
+      laborHours1: [0.36],
+      laborHours2: [0.00],
+      laborCost: [0.00],
+      material: [528.30],
+      materials: [0.00],
+      totalPrice: [0.00]),
+  ParquetAndLaminateModel(
+      name: "Surface covering parquet",
+      description: ["Parquet on subfloor, oak"],
+      unit: ["m²"],
+      quantity: [0.00],
+      laborHours1: [0.25],
+      laborHours2: [0.00],
+      laborCost: [0.00],
+      material: [0.00],
+      materials: [0.00],
+      totalPrice: [0.00]),
+];
+
 final windowsExteriorDoors = [
   WindowsAndExteriorDoorsModel(
     name: "Window, wooden wall top swing 12x10",

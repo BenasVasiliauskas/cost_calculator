@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class ParquetAndLaminateModel {
   String name;
-  List description;
-  List unit;
-  List quantity;
-  List laborHours1;
-  List laborHours2;
-  List laborCost;
-  List material;
-  List materials;
-  List totalPrice;
+  List<String> description;
+  List<String> unit;
+  List<double> quantity;
+  List<double> laborHours1;
+  List<double> laborHours2;
+  List<double> laborCost;
+  List<double> material;
+  List<double> materials;
+  List<double> totalPrice;
   final Color color;
 
   ParquetAndLaminateModel({

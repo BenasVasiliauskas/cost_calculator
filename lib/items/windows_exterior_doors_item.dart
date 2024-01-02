@@ -1,7 +1,5 @@
 import 'package:cost_calculator/pages/item_screen/windows_exterior_door_items_screen.dart';
 
-import '../pages/item_screen/interior_wall_items_screen.dart';
-import '../pages/norw_item_screen/norw_category_items_screen.dart';
 import 'package:flutter/material.dart';
 import '../constants/language.dart';
 

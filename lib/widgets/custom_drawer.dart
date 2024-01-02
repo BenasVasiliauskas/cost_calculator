@@ -1,3 +1,7 @@
+import 'package:cost_calculator/pages/inner_door_screen.dart';
+import 'package:cost_calculator/pages/kitchen_screen.dart';
+import 'package:cost_calculator/pages/parquet_laminate_screen.dart';
+
 import '../pages/budget_screen.dart';
 import '../pages/exterior_wall_screen.dart';
 import '../pages/interior_wall_screen.dart';
@@ -75,17 +79,41 @@ class CustomDrawer extends StatelessWidget {
             title: languageEnglish == true
                 ? Text('Interior doors')
                 : Text('Innerdører'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return InnerDoorScreen();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             title: languageEnglish == true
                 ? Text('Parquet and laminate')
                 : Text('Parkett og laminat'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ParquetLaminateScreen();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             title: languageEnglish == true ? Text('Kitchen') : Text('Kjøkken'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return KitchenScreen();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             title: languageEnglish == true ? Text('Budget') : Text('Budsjett'),
