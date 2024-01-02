@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../constants/innerwall_constants.dart';
+import '../../constants/innerwall_constants.dart';
 
-class ExteriorWallItemsScreen extends StatefulWidget {
+class NorwCategoryItemsScreen extends StatefulWidget {
   final String name;
   final List<String> description;
   final List<String> unit;
@@ -14,7 +14,7 @@ class ExteriorWallItemsScreen extends StatefulWidget {
   final List<double> material2;
   final List<double> totalPrice;
 
-  ExteriorWallItemsScreen(
+  NorwCategoryItemsScreen(
     this.name,
     this.description,
     this.unit,
@@ -29,11 +29,11 @@ class ExteriorWallItemsScreen extends StatefulWidget {
   );
 
   @override
-  _ExteriorWallItemsScreenState createState() =>
-      _ExteriorWallItemsScreenState();
+  _NorwCategoryItemsScreenState createState() =>
+      _NorwCategoryItemsScreenState();
 }
 
-class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
+class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
   List<DataRow> rows = [];
 
   List<TextEditingController> descriptionControllers = [];
@@ -46,9 +46,11 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
   List<TextEditingController> material1Controllers = [];
   List<TextEditingController> material2Controllers = [];
   List<TextEditingController> totalPriceControllers = [];
+
   TextEditingController quantityCalculationControllers =
       TextEditingController();
-  TextEditingController hourlyRateConstructionRemodelingController =
+
+  TextEditingController hourlyRateConstructionRemodelingControllers =
       TextEditingController();
 
   //used in     Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
@@ -121,7 +123,7 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
         DataCell(
           Container(
             width: 200,
-            child: Text('Total Sum'),
+            child: Text('Sum (eks. mva):'),
           ),
         ),
         DataCell(
@@ -229,20 +231,18 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
     quantityCalculationControllers.text =
         calculationQuantity.toStringAsFixed(2);
 
-    hourlyRateConstructionRemodelingController.text =
+    hourlyRateConstructionRemodelingControllers.text =
         hourlyRateConstructionRemodeling.toStringAsFixed(2);
   }
 
   @override
   Widget build(BuildContext context) {
     List<DataColumn> calculationColumns = [
-      DataColumn(
-          label: Text(
-              'Calculation Quantity')), //DataColumn(label: calculationQuantity == 0? Text('Calculation Quantity'): Text('Other text')),
-      DataColumn(label: Text('Hourly Rate - Construction/Remodeling')),
-      DataColumn(label: Text('Hourly Rate - Demolition')),
-      DataColumn(label: Text('Hourly Rate - Painting')),
-      DataColumn(label: Text('Unit')),
+      DataColumn(label: Text('Mengde')),
+      DataColumn(label: Text('Time pris. Ny bygg og ombygging.')),
+      DataColumn(label: Text('Time pris.Riving.')),
+      DataColumn(label: Text('Time pris.Maling. ')),
+      DataColumn(label: Text('Enhet')),
     ];
 
     List<DataRow> calculationRows = [
@@ -288,27 +288,29 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
                   decimal: true), // Allow decimal numbers
             ),
           ),
-          DataCell(TextField(
-            controller: hourlyRateConstructionRemodelingController,
-            onChanged: (value) {
-              hourlyRateConstructionRemodeling = double.parse(value);
-              for (int i = 0; i < widget.description.length; i++) {
-                // Recalculate and update the labor cost when hourlyRateConstructionRemodeling changes
-                widget.laborCost[i] = calculateJobCost(i);
-                laborCostControllers[i].text =
-                    calculateJobCost(i).toStringAsFixed(2);
+          DataCell(
+            TextField(
+              controller: hourlyRateConstructionRemodelingControllers,
+              onChanged: (value) {
+                hourlyRateConstructionRemodeling = double.parse(value);
+                //recalc labor cost
+                for (int i = 0; i < widget.description.length; i++) {
+                  widget.laborCost[i] = calculateJobCost(i);
+                  laborCostControllers[i].text =
+                      calculateJobCost(i).toStringAsFixed(2);
 
-                // Recalculate and update the total price when hourlyRateConstructionRemodeling changes
-                widget.totalPrice[i] = calculateTotalPrice(i);
-                totalPriceControllers[i].text =
-                    calculateTotalPrice(i).toStringAsFixed(2);
+                  //Recalculate total price
+                  widget.totalPrice[i] = calculateTotalPrice(i);
+                  totalPriceControllers[i].text =
+                      calculateTotalPrice(i).toStringAsFixed(2);
 
-                //Rebuild the data table
-                rebuildDataTable();
-              }
-            },
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-          )),
+                  rebuildDataTable();
+                }
+              },
+              keyboardType: TextInputType.numberWithOptions(
+                  decimal: true), // Allow decimal numbers
+            ),
+          ),
           DataCell(
             Container(
               width: 200, // Set a fixed width or use flexible width
@@ -341,61 +343,61 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
       DataColumn(
         label: SizedBox(
           width: 200, // Set the width as needed
-          child: Text('Description'),
+          child: Text('Beskrivelse'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Unit'),
+          child: Text('Enhet'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Quantity'),
+          child: Text('Mengde'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 150, // Set the width as needed
-          child: Text('Material quantity'),
+          child: Text('Mengde av material'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Hours'),
+          child: Text('Enh. tid.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Hours2'),
+          child: Text('Sum. tid.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Job cost'), // this
+          child: Text('Arb.pris'), // this
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material'),
+          child: Text('Enh. mater.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material'), // this
+          child: Text('Sum. material'), // this
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Total price'),
+          child: Text('Total pris'),
         ),
       ),
     ];
@@ -430,24 +432,24 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
               TextField(
                 readOnly: true,
                 controller: quantityControllers[i],
-                // onChanged: (value) {
-                //   // Handle changes to the quantity
-                //   double parsedValue = double.parse(value);
-                //   widget.quantity[i] = double.parse(parsedValue
-                //       .toStringAsFixed(2)); // Update the widget quantity
+                onChanged: (value) {
+                  // // Handle changes to the quantity
+                  // double parsedValue = double.parse(value);
+                  // widget.quantity[i] = double.parse(parsedValue
+                  //     .toStringAsFixed(2)); // Update the widget quantity
 
-                //   // Recalculate and update the material quantity when quantity changes
-                //   widget.materialQuantity[i] = calculateMaterialQuantity(
-                //       i); // Update widget.materialQuantity
-                //   materialQuantityControllers[i].text = widget
-                //       .materialQuantity[i]
-                //       .toStringAsFixed(2); // Format to 2 decimal places
+                  // // Recalculate and update the material quantity when quantity changes
+                  // widget.materialQuantity[i] = calculateMaterialQuantity(
+                  //     i); // Update widget.materialQuantity
+                  // materialQuantityControllers[i].text = widget
+                  //     .materialQuantity[i]
+                  //     .toStringAsFixed(2); // Format to 2 decimal places
 
-                //   // Update total sum values
-                //   rebuildDataTable();
-                // },
-                // keyboardType: TextInputType.numberWithOptions(
-                //     decimal: true), // Allow decimal numbers
+                  // // Update total sum values
+                  // rebuildDataTable();
+                },
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true), // Allow decimal numbers
               ),
             ),
             DataCell(
@@ -567,6 +569,7 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
             ),
             DataCell(
               TextField(
+                readOnly: true,
                 controller: totalPriceControllers[i],
                 onChanged: (value) {
                   // Handle changes to the total price
@@ -574,7 +577,6 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
                   totalPriceControllers[i].text =
                       widget.totalPrice[i].toStringAsFixed(2);
                 },
-                readOnly: true,
               ),
             ),
           ],
@@ -606,7 +608,7 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
         DataCell(
           Container(
             width: 200,
-            child: Text('Total Sum'),
+            child: Text('Sum (eks. mva):'),
           ),
         ),
         DataCell(

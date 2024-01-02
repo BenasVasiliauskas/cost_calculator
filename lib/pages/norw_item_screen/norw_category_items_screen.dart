@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/innerwall_constants.dart';
+import '../../constants/innerwall_constants.dart';
 
 class NorwCategoryItemsScreen extends StatefulWidget {
   final String name;

@@ -1,5 +1,5 @@
-import '../pages/exterior_wall_items_screen.dart';
-import '../pages/norw_exterior_wall_items_screen.dart';
+import '../pages/item_screen/exterior_wall_items_screen.dart';
+import '../pages/norw_item_screen/norw_exterior_wall_items_screen.dart';
 import 'package:flutter/material.dart';
 import '../constants/language.dart';
 

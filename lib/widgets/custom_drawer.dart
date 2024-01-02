@@ -1,6 +1,9 @@
+import '../pages/budget_screen.dart';
 import '../pages/exterior_wall_screen.dart';
 import '../pages/interior_wall_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../pages/windows_exterior_door_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   final bool languageEnglish;
@@ -58,7 +61,15 @@ class CustomDrawer extends StatelessWidget {
             title: languageEnglish == true
                 ? Text('Windows and exterior doors')
                 : Text('Vinduer og ytterdører'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return WindowsExteriorDoorScreen();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             title: languageEnglish == true
@@ -78,7 +89,15 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: languageEnglish == true ? Text('Budget') : Text('Budsjett'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return BudgetScreen();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             title: languageEnglish == true

@@ -53,24 +53,24 @@ class _ExteriorWallScreenState extends State<ExteriorWallScreen> {
             )
           : GridView.count(
               padding: const EdgeInsets.all(25),
-              // children: norwInnerWallData
-              //     .map(
-              //       (catData) => CategoryItem(
-              //         catData.name,
-              //         catData.description,
-              //         catData.unit,
-              //         catData.quantity,
-              //         catData.materialQuantity,
-              //         catData.laborHours1,
-              //         catData.laborHours2,
-              //         catData.laborCost,
-              //         catData.material1,
-              //         catData.material2,
-              //         catData.totalPrice,
-              //         catData.color,
-              //       ),
-              //     )
-              //     .toList(),
+              children: norwExteriorWallData
+                  .map(
+                    (wallItem) => OuterWallItem(
+                      wallItem.name,
+                      wallItem.description,
+                      wallItem.unit,
+                      wallItem.quantity,
+                      wallItem.materialQuantity,
+                      wallItem.laborHours1,
+                      wallItem.laborHours2,
+                      wallItem.laborCost,
+                      wallItem.material,
+                      wallItem.materials,
+                      wallItem.totalPrice,
+                      wallItem.color,
+                    ),
+                  )
+                  .toList(),
               crossAxisCount: 1,
               mainAxisSpacing: 20,
               childAspectRatio: 7 / 2,
