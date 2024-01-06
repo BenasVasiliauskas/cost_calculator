@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../constants/innerwall_constants.dart';
 
-class NorwCategoryItemsScreen extends StatefulWidget {
+class NorwWindowsExteriorDoorItemsScreen extends StatefulWidget {
   final String name;
   final List<String> description;
   final List<String> unit;
   final List<double> quantity;
-  final List<double> materialQuantity;
   final List<double> laborHours1;
   final List<double> laborHours2;
   final List<double> laborCost;
@@ -14,12 +13,11 @@ class NorwCategoryItemsScreen extends StatefulWidget {
   final List<double> material2;
   final List<double> totalPrice;
 
-  NorwCategoryItemsScreen(
+  NorwWindowsExteriorDoorItemsScreen(
     this.name,
     this.description,
     this.unit,
     this.quantity,
-    this.materialQuantity,
     this.laborHours1,
     this.laborHours2,
     this.laborCost,
@@ -29,11 +27,12 @@ class NorwCategoryItemsScreen extends StatefulWidget {
   );
 
   @override
-  _NorwCategoryItemsScreenState createState() =>
-      _NorwCategoryItemsScreenState();
+  _NorwWindowsExteriorDoorItemsScreenState createState() =>
+      _NorwWindowsExteriorDoorItemsScreenState();
 }
 
-class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
+class _NorwWindowsExteriorDoorItemsScreenState
+    extends State<NorwWindowsExteriorDoorItemsScreen> {
   List<DataRow> rows = [];
 
   List<TextEditingController> descriptionControllers = [];
@@ -108,7 +107,7 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
 
     for (int i = 0; i < widget.description.length; i++) {
       totalQuantity += widget.quantity[i];
-      totalMaterialQuantity += widget.materialQuantity[i];
+
       totalLaborHours1 += widget.laborHours1[i];
       totalLaborHours2 += widget.laborHours2[i];
       totalLaborCost += widget.laborCost[i];
@@ -219,8 +218,7 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
       descriptionControllers[i].text = widget.description[i];
       unitControllers[i].text = widget.unit[i];
       quantityControllers[i].text = widget.quantity[i].toStringAsFixed(2);
-      materialQuantityControllers[i].text =
-          widget.materialQuantity[i].toStringAsFixed(2);
+
       laborHours1Controllers[i].text = widget.laborHours1[i].toStringAsFixed(2);
       laborHours2Controllers[i].text = widget.laborHours2[i].toStringAsFixed(2);
       laborCostControllers[i].text = widget.laborCost[i].toStringAsFixed(2);
@@ -257,9 +255,7 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
                 //recalculate all fields where calculationQuantity is used e.x materialQuantity ...
                 for (int i = 0; i < widget.description.length; i++) {
                   // Recalculate and update the material quantity when quantity changes
-                  widget.materialQuantity[i] = calculateMaterialQuantity(i);
-                  materialQuantityControllers[i].text =
-                      calculateMaterialQuantity(i).toStringAsFixed(2);
+
                   // Recalculate and update the labor hours 2 when quantity changes
                   widget.laborHours2[i] = calculateWorkHours2(i);
                   laborHours2Controllers[i].text =
@@ -359,12 +355,6 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
       ),
       DataColumn(
         label: SizedBox(
-          width: 150, // Set the width as needed
-          child: Text('Mengde av material'),
-        ),
-      ),
-      DataColumn(
-        label: SizedBox(
           width: 100, // Set the width as needed
           child: Text('Enh. tid.'),
         ),
@@ -449,16 +439,6 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
                 },
                 keyboardType: TextInputType.numberWithOptions(
                     decimal: true), // Allow decimal numbers
-              ),
-            ),
-            DataCell(
-              TextField(
-                readOnly: true,
-                controller: materialQuantityControllers[i],
-                onChanged: (value) {
-                  // Handle changes to the material quantity
-                  widget.materialQuantity[i] = double.parse(value);
-                },
               ),
             ),
             DataCell(
@@ -626,12 +606,6 @@ class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
           Container(
             width: 150,
             child: Text(""),
-          ),
-        ),
-        DataCell(
-          Container(
-            width: 100,
-            child: Text(totalLaborHours1.toStringAsFixed(2)),
           ),
         ),
         DataCell(

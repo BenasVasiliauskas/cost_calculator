@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../constants/language.dart';
 
-class BudgetScreen extends StatelessWidget {
+class BudgetScreen extends StatefulWidget {
+  @override
+  State<BudgetScreen> createState() => _BudgetScreenState();
+}
+
+class _BudgetScreenState extends State<BudgetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +18,11 @@ class BudgetScreen extends StatelessWidget {
       ),
       drawer: CustomDrawer(
         languageEnglish: languageEnglish,
-        onLanguageChanged: (bool) {},
+        onLanguageChanged: (value) {
+          setState(() {
+            languageEnglish = value;
+          });
+        },
       ),
       body: Center(
         child: Column(

@@ -51,7 +51,7 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
   TextEditingController hourlyRateConstructionRemodelingController =
       TextEditingController();
 
-  //used in     Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
+  //used in Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
   double calculateCostPainting(int index) {
     double laborCost = widget.laborHours2[index];
     return laborCost * hourlyRatePainting;

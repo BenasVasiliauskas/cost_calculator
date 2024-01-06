@@ -1,4 +1,5 @@
 import 'package:cost_calculator/pages/item_screen/parquet_laminate_items_screen.dart';
+import 'package:cost_calculator/pages/norw_item_screen/norw_parquet_laminate_items_screen.dart';
 
 import 'package:flutter/material.dart';
 import '../constants/language.dart';
@@ -47,7 +48,7 @@ class ParquetLaminateItem extends StatelessWidget {
                   material2,
                   totalPrice,
                 )
-              : ParquetLaminateItemsScreen(
+              : NorwParquetLaminatetemsScreen(
                   name,
                   description,
                   unit,

@@ -24,6 +24,6 @@ class KitchenModel {
     required this.material,
     required this.materials,
     required this.totalPrice,
-    this.color = const Color.fromARGB(255, 65, 150, 207),
+    this.color = const Color.fromARGB(255, 101, 80, 194),
   });
 }

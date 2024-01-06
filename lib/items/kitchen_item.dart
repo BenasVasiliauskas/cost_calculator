@@ -1,4 +1,5 @@
 import 'package:cost_calculator/pages/item_screen/kitchen_item_screen.dart';
+import 'package:cost_calculator/pages/norw_item_screen/norw_kitchen_item_screen.dart';
 
 import 'package:flutter/material.dart';
 import '../constants/language.dart';
@@ -47,7 +48,7 @@ class KitchenItem extends StatelessWidget {
                   material2,
                   totalPrice,
                 )
-              : KitchenItemScreen(
+              : NorwKitchentemsScreen(
                   name,
                   description,
                   unit,

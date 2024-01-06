@@ -50,8 +50,7 @@ class OuterWallItem extends StatelessWidget {
                   material2,
                   totalPrice,
                 )
-              : NorwCategoryItemsScreen(
-                  // change to NorwOuterWallScreen(
+              : NorwExteriorWallItemsScreen(
                   name,
                   description,
                   unit,

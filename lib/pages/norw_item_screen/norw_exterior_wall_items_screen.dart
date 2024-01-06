@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../constants/innerwall_constants.dart';
 
-class NorwCategoryItemsScreen extends StatefulWidget {
+class NorwExteriorWallItemsScreen extends StatefulWidget {
   final String name;
   final List<String> description;
   final List<String> unit;
@@ -14,7 +14,7 @@ class NorwCategoryItemsScreen extends StatefulWidget {
   final List<double> material2;
   final List<double> totalPrice;
 
-  NorwCategoryItemsScreen(
+  NorwExteriorWallItemsScreen(
     this.name,
     this.description,
     this.unit,
@@ -29,11 +29,12 @@ class NorwCategoryItemsScreen extends StatefulWidget {
   );
 
   @override
-  _NorwCategoryItemsScreenState createState() =>
-      _NorwCategoryItemsScreenState();
+  _NorwExteriorWallItemsScreenState createState() =>
+      _NorwExteriorWallItemsScreenState();
 }
 
-class _NorwCategoryItemsScreenState extends State<NorwCategoryItemsScreen> {
+class _NorwExteriorWallItemsScreenState
+    extends State<NorwExteriorWallItemsScreen> {
   List<DataRow> rows = [];
 
   List<TextEditingController> descriptionControllers = [];

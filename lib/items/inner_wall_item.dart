@@ -1,5 +1,5 @@
 import '../pages/item_screen/interior_wall_items_screen.dart';
-import '../pages/norw_item_screen/norw_category_items_screen.dart';
+import '../pages/norw_item_screen/norw_interior_wall_items_screen.dart';
 import 'package:flutter/material.dart';
 import '../constants/language.dart';
 
@@ -50,7 +50,7 @@ class InnerWallItem extends StatelessWidget {
                   material2,
                   totalPrice,
                 )
-              : NorwCategoryItemsScreen(
+              : NorwInteriorWallItemsScreen(
                   name,
                   description,
                   unit,
