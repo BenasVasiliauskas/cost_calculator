@@ -1,5 +1,7 @@
+import 'package:cost_calculator/functions/create_worksheet.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+
 import '../../constants/innerwall_constants.dart';
 
 class InteriorWallItemsScreen extends StatefulWidget {
@@ -133,7 +135,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
         DataCell(
           Container(
             width: 200,
-            child: Text('Total Sum'),
+            child: Text('Total Sum'), // child: Text('Sum (eks. mva):'),
           ),
         ),
         DataCell(
@@ -265,11 +267,18 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   @override
   Widget build(BuildContext context) {
     List<DataColumn> calculationColumns = [
-      DataColumn(label: Text('Calculation Quantity')),
+      DataColumn(
+          label: Text(
+              'Calculation Quantity')), //DataColumn(label: Text('Mengde')),
+
       DataColumn(label: Text('Hourly Rate - Construction/Remodeling')),
+      //DataColumn(label: Text('Time pris. Ny bygg og ombygging.')),
       DataColumn(label: Text('Hourly Rate - Demolition')),
+      //DataColumn(label: Text('Time pris.Riving.')),
       DataColumn(label: Text('Hourly Rate - Painting')),
+      // DataColumn(label: Text('Time pris.Maling. ')),
       DataColumn(label: Text('Unit')),
+      //DataColumn(label: Text('Enhet')),
     ];
 
     List<DataRow> calculationRows = [
@@ -385,31 +394,31 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       DataColumn(
         label: SizedBox(
           width: 200, // Set the width as needed
-          child: Text('Description'),
+          child: Text('Description'), //Text('Beskrivelse'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Unit'),
+          child: Text('Unit'), //child: Text('Enhet'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Quantity'),
+          child: Text('Quantity'), //child: Text('Mengde'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 150, // Set the width as needed
-          child: Text('Material quantity'),
+          child: Text('Material quantity'), //child: Text('Mengde av material'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Hours',
+          child: Text('Hours', //child: Text('Enh. tid.'),
               style:
                   TextStyle(color: customColumn ? Colors.grey : Colors.black)),
         ),
@@ -434,34 +443,35 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Hours2'),
+          child: Text('Hours2'), //child: Text('Sum. tid.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Job cost'), // this
+          child: Text('Job cost'), // child: Text('Arb.pris'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material'),
+          child: Text('Material'), //Text('Enh. mater.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material cost'), // this
+          child: Text('Material cost'), // Text('Sum. material'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Total price'),
+          child: Text('Total price'), //Text('Total pris'),
         ),
       ),
     ];
+
     List<DataRow> rows = [];
 
     for (int i = 0; i < widget.description.length; i++) {
@@ -738,20 +748,39 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
         child: Column(
           children: [
             SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: customColumn == true
-                    ? DataTable(
-                        dataRowMaxHeight: double.infinity,
-                        dataRowMinHeight: 60,
-                        columns: columns, // Define your columns here
-                        rows: rows,
-                      )
-                    : DataTable(
-                        dataRowMaxHeight: double.infinity,
-                        dataRowMinHeight: 60,
-                        columns: columns, // Define your columns here
-                        rows: rows,
-                      )),
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                dataRowMaxHeight: double.infinity,
+                dataRowMinHeight: 60,
+                columns: columns, // Define your columns here
+                rows: rows,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+              child: Align(
+                child: FloatingActionButton(
+                  onPressed: () {
+                    generateExcelDocument(
+                      columns,
+                      widget.description,
+                      widget.unit,
+                      quantityControllers,
+                      materialQuantityControllers,
+                      laborHours1Controllers,
+                      customColumnControllers,
+                      laborHours2Controllers,
+                      laborCostControllers,
+                      material1Controllers,
+                      material2Controllers,
+                      totalPriceControllers,
+                    );
+                  },
+                  child: Text("Save"),
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(

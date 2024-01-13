@@ -15,21 +15,39 @@ class _InnerWallScreenState extends State<InnerWallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(
-        languageEnglish: languageEnglish,
-        onLanguageChanged: (value) {
-          setState(() {
-            languageEnglish = value;
-          });
-        },
-      ),
-      appBar: AppBar(
-        title: const Text('Bygg Kalk'),
-      ),
-      body: languageEnglish == true
-          ? GridView.count(
-              padding: const EdgeInsets.all(25),
-              children: dataInnerWallData
+        drawer: CustomDrawer(
+          languageEnglish: languageEnglish,
+          onLanguageChanged: (value) {
+            setState(() {
+              languageEnglish = value;
+            });
+          },
+        ),
+        appBar: AppBar(
+          title: const Text('Bygg Kalk'),
+        ),
+        body: GridView.count(
+          padding: const EdgeInsets.all(25),
+          children: languageEnglish == true
+              ? dataInnerWallData
+                  .map(
+                    (catData) => InnerWallItem(
+                      catData.name,
+                      catData.description,
+                      catData.unit,
+                      catData.quantity,
+                      catData.materialQuantity,
+                      catData.laborHours1,
+                      catData.laborHours2,
+                      catData.laborCost,
+                      catData.material1,
+                      catData.material2,
+                      catData.totalPrice,
+                      catData.color,
+                    ),
+                  )
+                  .toList()
+              : norwInnerWallData
                   .map(
                     (catData) => InnerWallItem(
                       catData.name,
@@ -47,34 +65,9 @@ class _InnerWallScreenState extends State<InnerWallScreen> {
                     ),
                   )
                   .toList(),
-              crossAxisCount: 1,
-              mainAxisSpacing: 20,
-              childAspectRatio: 7 / 2,
-            )
-          : GridView.count(
-              padding: const EdgeInsets.all(25),
-              children: norwInnerWallData
-                  .map(
-                    (catData) => InnerWallItem(
-                      catData.name,
-                      catData.description,
-                      catData.unit,
-                      catData.quantity,
-                      catData.materialQuantity,
-                      catData.laborHours1,
-                      catData.laborHours2,
-                      catData.laborCost,
-                      catData.material1,
-                      catData.material2,
-                      catData.totalPrice,
-                      catData.color,
-                    ),
-                  )
-                  .toList(),
-              crossAxisCount: 1,
-              mainAxisSpacing: 20,
-              childAspectRatio: 7 / 2,
-            ),
-    );
+          crossAxisCount: 1,
+          mainAxisSpacing: 20,
+          childAspectRatio: 7 / 2,
+        ));
   }
 }
