@@ -36,9 +36,10 @@ class InteriorWallItemsScreen extends StatefulWidget {
       _InteriorWallItemsScreenState();
 }
 
+List<double> emptyCustomList = [];
+
 class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   List<DataRow> rows = [];
-
   List<TextEditingController> descriptionControllers = [];
   List<TextEditingController> unitControllers = [];
   List<TextEditingController> quantityControllers = [];
@@ -65,13 +66,14 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   }
 
   double calculateMaterialQuantity(int index) {
+    emptyCustomList = createList(widget.description.length);
     double quantity = widget.quantity[index];
     return quantity * calculationQuantity;
   }
 
   double calculateWorkHours2(int index) {
     if (customColumn) {
-      double laborHours1 = testList[index];
+      double laborHours1 = emptyCustomList[index];
       return laborHours1 * calculationQuantity;
     } else {
       double laborHours1 = widget.laborHours1[index];
@@ -107,9 +109,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
     });
 
     // Calculate the total sum values
-
     double totalLaborHours1 = 0.0;
-    //
     double totalCustomColumn = 0.0;
     double totalLaborHours2 = 0.0;
     double totalLaborCost = 0.0;
@@ -119,13 +119,11 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
 
     for (int i = 0; i < widget.description.length; i++) {
       totalLaborHours1 += widget.laborHours1[i];
-      //
-      totalCustomColumn += testList[i];
+      totalCustomColumn += emptyCustomList[i];
       totalLaborHours2 += widget.laborHours2[i];
       totalLaborCost += widget.laborCost[i];
       totalMaterial1 += widget.material1[i];
       totalMaterial2 += widget.material2[i];
-
       totalTotalPrice += widget.totalPrice[i];
     }
 
@@ -341,9 +339,10 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
               hourlyRateConstructionRemodeling = double.parse(value);
               for (int i = 0; i < widget.description.length; i++) {
                 //
-                testList[i] = double.parse(customColumnControllers[i].text);
+                emptyCustomList[i] =
+                    double.parse(customColumnControllers[i].text);
                 customColumnControllers[i].text =
-                    testList[i].toStringAsFixed(2);
+                    emptyCustomList[i].toStringAsFixed(2);
                 //
 
                 // Recalculate and update the labor cost when hourlyRateConstructionRemodeling changes
@@ -534,7 +533,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
                 controller: customColumnControllers[i],
                 onChanged: (value) {
                   double parsedValue = double.parse(value);
-                  testList[i] = double.parse(parsedValue
+                  emptyCustomList[i] = double.parse(parsedValue
                       .toStringAsFixed(2)); // Format to 2 decimal places
                   // Recalculate and update the labor hours 2 when labor hours 1 changes need changes
 
@@ -699,7 +698,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
           width: 100,
           child: Text(
             // calc custom hours
-            customColumn ? testList.sum.toStringAsFixed(2) : '',
+            customColumn ? emptyCustomList.sum.toStringAsFixed(2) : '',
             //need to recalc labor cost and use that in total sum if enabled
           ),
         )),

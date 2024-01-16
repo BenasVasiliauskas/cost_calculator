@@ -1,3 +1,4 @@
+import 'package:cost_calculator/functions/create_worksheet.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import '../../constants/innerwall_constants.dart';
@@ -32,10 +33,11 @@ class ParquetLaminateItemsScreen extends StatefulWidget {
       _ParquetLaminateItemsScreenState();
 }
 
+List<double> emptyCustomList = [];
+
 class _ParquetLaminateItemsScreenState
     extends State<ParquetLaminateItemsScreen> {
   List<DataRow> rows = [];
-
   List<TextEditingController> descriptionControllers = [];
   List<TextEditingController> unitControllers = [];
   List<TextEditingController> quantityControllers = [];
@@ -68,7 +70,7 @@ class _ParquetLaminateItemsScreenState
 
   double calculateWorkHours2(int index) {
     if (customColumn) {
-      double laborHours1 = testList[index];
+      double laborHours1 = emptyCustomList[index];
       return laborHours1 * calculationQuantity;
     } else {
       double laborHours1 = widget.laborHours1[index];
@@ -104,9 +106,7 @@ class _ParquetLaminateItemsScreenState
     });
 
     // Calculate the total sum values
-
     double totalLaborHours1 = 0.0;
-    //
     double totalCustomColumn = 0.0;
     double totalLaborHours2 = 0.0;
     double totalLaborCost = 0.0;
@@ -116,13 +116,11 @@ class _ParquetLaminateItemsScreenState
 
     for (int i = 0; i < widget.description.length; i++) {
       totalLaborHours1 += widget.laborHours1[i];
-      //
-      totalCustomColumn += testList[i];
+      totalCustomColumn += emptyCustomList[i];
       totalLaborHours2 += widget.laborHours2[i];
       totalLaborCost += widget.laborCost[i];
       totalMaterial1 += widget.material1[i];
       totalMaterial2 += widget.material2[i];
-
       totalTotalPrice += widget.totalPrice[i];
     }
 
@@ -132,7 +130,7 @@ class _ParquetLaminateItemsScreenState
         DataCell(
           Container(
             width: 200,
-            child: Text('Total Sum'),
+            child: Text('Total Sum'), // child: Text('Sum (eks. mva):'),
           ),
         ),
         DataCell(
@@ -233,7 +231,6 @@ class _ParquetLaminateItemsScreenState
       descriptionControllers[i].text = widget.description[i];
       unitControllers[i].text = widget.unit[i];
       quantityControllers[i].text = widget.quantity[i].toStringAsFixed(2);
-
       laborHours1Controllers[i].text = widget.laborHours1[i].toStringAsFixed(2);
       laborHours2Controllers[i].text = widget.laborHours2[i].toStringAsFixed(2);
       laborCostControllers[i].text = widget.laborCost[i].toStringAsFixed(2);
@@ -263,11 +260,18 @@ class _ParquetLaminateItemsScreenState
   @override
   Widget build(BuildContext context) {
     List<DataColumn> calculationColumns = [
-      DataColumn(label: Text('Calculation Quantity')),
+      DataColumn(
+          label: Text(
+              'Calculation Quantity')), //DataColumn(label: Text('Mengde')),
+
       DataColumn(label: Text('Hourly Rate - Construction/Remodeling')),
+      //DataColumn(label: Text('Time pris. Ny bygg og ombygging.')),
       DataColumn(label: Text('Hourly Rate - Demolition')),
+      //DataColumn(label: Text('Time pris.Riving.')),
       DataColumn(label: Text('Hourly Rate - Painting')),
+      // DataColumn(label: Text('Time pris.Maling. ')),
       DataColumn(label: Text('Unit')),
+      //DataColumn(label: Text('Enhet')),
     ];
 
     List<DataRow> calculationRows = [
@@ -281,8 +285,6 @@ class _ParquetLaminateItemsScreenState
                 calculationQuantity = double.parse(value);
                 //recalculate all fields where calculationQuantity is used e.x materialQuantity ...
                 for (int i = 0; i < widget.description.length; i++) {
-                  // Recalculate and update the material quantity when quantity changes
-
                   widget.laborHours2[i] = calculateWorkHours2(i);
                   laborHours2Controllers[i].text =
                       calculateWorkHours2(i).toStringAsFixed(2);
@@ -327,9 +329,10 @@ class _ParquetLaminateItemsScreenState
               hourlyRateConstructionRemodeling = double.parse(value);
               for (int i = 0; i < widget.description.length; i++) {
                 //
-                testList[i] = double.parse(customColumnControllers[i].text);
+                emptyCustomList[i] =
+                    double.parse(customColumnControllers[i].text);
                 customColumnControllers[i].text =
-                    testList[i].toStringAsFixed(2);
+                    emptyCustomList[i].toStringAsFixed(2);
                 //
 
                 // Recalculate and update the labor cost when hourlyRateConstructionRemodeling changes
@@ -380,31 +383,25 @@ class _ParquetLaminateItemsScreenState
       DataColumn(
         label: SizedBox(
           width: 200, // Set the width as needed
-          child: Text('Description'),
+          child: Text('Description'), //Text('Beskrivelse'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Unit'),
+          child: Text('Unit'), //child: Text('Enhet'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Quantity'),
-        ),
-      ),
-      DataColumn(
-        label: SizedBox(
-          width: 150, // Set the width as needed
-          child: Text('Material quantity'),
+          child: Text('Quantity'), //child: Text('Mengde'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Hours',
+          child: Text('Hours', //child: Text('Enh. tid.'),
               style:
                   TextStyle(color: customColumn ? Colors.grey : Colors.black)),
         ),
@@ -429,34 +426,35 @@ class _ParquetLaminateItemsScreenState
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Hours2'),
+          child: Text('Hours2'), //child: Text('Sum. tid.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Job cost'), // this
+          child: Text('Job cost'), // child: Text('Arb.pris'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material'),
+          child: Text('Material'), //Text('Enh. mater.'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Material cost'), // this
+          child: Text('Material cost'), // Text('Sum. material'),
         ),
       ),
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Total price'),
+          child: Text('Total price'), //Text('Total pris'),
         ),
       ),
     ];
+
     List<DataRow> rows = [];
 
     for (int i = 0; i < widget.description.length; i++) {
@@ -490,15 +488,7 @@ class _ParquetLaminateItemsScreenState
                 controller: quantityControllers[i],
               ),
             ),
-            DataCell(
-              TextField(
-                readOnly: true,
-                controller: materialQuantityControllers[i],
-                onChanged: (value) {
-                  // Handle changes to the material quantity
-                },
-              ),
-            ),
+
             DataCell(
               TextField(
                 style:
@@ -518,7 +508,7 @@ class _ParquetLaminateItemsScreenState
                 controller: customColumnControllers[i],
                 onChanged: (value) {
                   double parsedValue = double.parse(value);
-                  testList[i] = double.parse(parsedValue
+                  emptyCustomList[i] = double.parse(parsedValue
                       .toStringAsFixed(2)); // Format to 2 decimal places
                   // Recalculate and update the labor hours 2 when labor hours 1 changes need changes
 
@@ -657,12 +647,6 @@ class _ParquetLaminateItemsScreenState
         DataCell(
           Container(
             width: 100,
-            child: Text(''),
-          ),
-        ),
-        DataCell(
-          Container(
-            width: 100,
             child: Text(""),
           ),
         ),
@@ -683,7 +667,7 @@ class _ParquetLaminateItemsScreenState
           width: 100,
           child: Text(
             // calc custom hours
-            customColumn ? testList.sum.toStringAsFixed(2) : '',
+            customColumn ? emptyCustomList.sum.toStringAsFixed(2) : '',
             //need to recalc labor cost and use that in total sum if enabled
           ),
         )),
@@ -732,20 +716,39 @@ class _ParquetLaminateItemsScreenState
         child: Column(
           children: [
             SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: customColumn == true
-                    ? DataTable(
-                        dataRowMaxHeight: double.infinity,
-                        dataRowMinHeight: 60,
-                        columns: columns, // Define your columns here
-                        rows: rows,
-                      )
-                    : DataTable(
-                        dataRowMaxHeight: double.infinity,
-                        dataRowMinHeight: 60,
-                        columns: columns, // Define your columns here
-                        rows: rows,
-                      )),
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                dataRowMaxHeight: double.infinity,
+                dataRowMinHeight: 60,
+                columns: columns, // Define your columns here
+                rows: rows,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+              child: Align(
+                child: FloatingActionButton(
+                  onPressed: () {
+                    generateExcelDocument(
+                      columns,
+                      widget.description,
+                      widget.unit,
+                      quantityControllers,
+                      materialQuantityControllers,
+                      laborHours1Controllers,
+                      customColumnControllers,
+                      laborHours2Controllers,
+                      laborCostControllers,
+                      material1Controllers,
+                      material2Controllers,
+                      totalPriceControllers,
+                    );
+                  },
+                  child: Text("Save"),
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
