@@ -56,6 +56,10 @@ class _InnerDoorItemScreenState extends State<InnerDoorItemScreen> {
   //
   List<TextEditingController> customColumnControllers = [];
 
+  void initialiseEmptyList() {
+    emptyCustomList = createList(widget.description.length);
+  }
+
   //used in Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
   double calculateCostPainting(int index) {
     double laborCost = widget.laborHours2[index];
@@ -223,6 +227,7 @@ class _InnerDoorItemScreenState extends State<InnerDoorItemScreen> {
       totalPriceControllers.add(TextEditingController());
       customColumnControllers.add(TextEditingController());
     }
+    initialiseEmptyList();
   }
 
   void setInitialValues() {
@@ -265,10 +270,7 @@ class _InnerDoorItemScreenState extends State<InnerDoorItemScreen> {
 
       DataColumn(label: Text('Hourly Rate - Construction/Remodeling')),
       //DataColumn(label: Text('Time pris. Ny bygg og ombygging.')),
-      DataColumn(label: Text('Hourly Rate - Demolition')),
-      //DataColumn(label: Text('Time pris.Riving.')),
-      DataColumn(label: Text('Hourly Rate - Painting')),
-      // DataColumn(label: Text('Time pris.Maling. ')),
+
       DataColumn(label: Text('Unit')),
       //DataColumn(label: Text('Enhet')),
     ];
@@ -294,7 +296,8 @@ class _InnerDoorItemScreenState extends State<InnerDoorItemScreen> {
 
                   // Recalculate and update the labor cost when quantity changes
                   if (widget.description[i] ==
-                      "Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling") {
+                          "Sparkling strip, stain sp.1, joint sp. 2, full sp.1, primer. 2 coats of paint" ||
+                      widget.description[i] == "2 coats stain, exterior") {
                     widget.laborCost[i] = calculateCostPainting(i);
                     laborCostControllers[i].text =
                         calculateCostPainting(i).toStringAsFixed(2);
@@ -350,22 +353,6 @@ class _InnerDoorItemScreenState extends State<InnerDoorItemScreen> {
             },
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           )),
-          DataCell(
-            Container(
-              width: 200, // Set a fixed width or use flexible width
-              child: Text(
-                hourlyRateDemolition.toStringAsFixed(2),
-              ),
-            ),
-          ),
-          DataCell(
-            Container(
-              width: 200, // Set a fixed width or use flexible width
-              child: Text(
-                hourlyRatePainting.toStringAsFixed(2),
-              ),
-            ),
-          ),
           DataCell(
             Container(
               width: 200, // Set a fixed width or use flexible width

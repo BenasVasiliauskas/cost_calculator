@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import '../../constants/innerwall_constants.dart';
+import '../../functions/create_worksheet.dart';
 
 class NorwInteriorWallItemsScreen extends StatefulWidget {
   final String name;
@@ -39,7 +40,6 @@ List<double> emptyCustomList = [];
 class _NorwInteriorWallItemsScreenState
     extends State<NorwInteriorWallItemsScreen> {
   List<DataRow> rows = [];
-
   List<TextEditingController> descriptionControllers = [];
   List<TextEditingController> unitControllers = [];
   List<TextEditingController> quantityControllers = [];
@@ -58,6 +58,10 @@ class _NorwInteriorWallItemsScreenState
       TextEditingController();
   //
   List<TextEditingController> customColumnControllers = [];
+
+  void initialiseEmptyList() {
+    emptyCustomList = createList(widget.description.length);
+  }
 
   //used in Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
   double calculateCostPainting(int index) {
@@ -108,9 +112,7 @@ class _NorwInteriorWallItemsScreenState
     });
 
     // Calculate the total sum values
-
     double totalLaborHours1 = 0.0;
-    //
     double totalCustomColumn = 0.0;
     double totalLaborHours2 = 0.0;
     double totalLaborCost = 0.0;
@@ -120,13 +122,11 @@ class _NorwInteriorWallItemsScreenState
 
     for (int i = 0; i < widget.description.length; i++) {
       totalLaborHours1 += widget.laborHours1[i];
-      //
       totalCustomColumn += emptyCustomList[i];
       totalLaborHours2 += widget.laborHours2[i];
       totalLaborCost += widget.laborCost[i];
       totalMaterial1 += widget.material1[i];
       totalMaterial2 += widget.material2[i];
-
       totalTotalPrice += widget.totalPrice[i];
     }
 
@@ -230,6 +230,7 @@ class _NorwInteriorWallItemsScreenState
       totalPriceControllers.add(TextEditingController());
       customColumnControllers.add(TextEditingController());
     }
+    initialiseEmptyList();
   }
 
   void setInitialValues() {
@@ -413,9 +414,10 @@ class _NorwInteriorWallItemsScreenState
       DataColumn(
         label: SizedBox(
           width: 100, // Set the width as needed
-          child: Text('Enh. tid.',
-              style:
-                  TextStyle(color: customColumn ? Colors.grey : Colors.black)),
+          child: Text(
+            'Enh. tid.',
+            style: TextStyle(color: customColumn ? Colors.grey : Colors.black),
+          ),
         ),
       ),
       DataColumn(
@@ -466,6 +468,7 @@ class _NorwInteriorWallItemsScreenState
         ),
       ),
     ];
+
     List<DataRow> rows = [];
 
     for (int i = 0; i < widget.description.length; i++) {
@@ -661,7 +664,7 @@ class _NorwInteriorWallItemsScreenState
         DataCell(
           Container(
             width: 200,
-            child: Text('Total pris'),
+            child: Text('Total (eks. mva)'),
           ),
         ),
         DataCell(
@@ -742,20 +745,39 @@ class _NorwInteriorWallItemsScreenState
         child: Column(
           children: [
             SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: customColumn == true
-                    ? DataTable(
-                        dataRowMaxHeight: double.infinity,
-                        dataRowMinHeight: 60,
-                        columns: columns, // Define your columns here
-                        rows: rows,
-                      )
-                    : DataTable(
-                        dataRowMaxHeight: double.infinity,
-                        dataRowMinHeight: 60,
-                        columns: columns, // Define your columns here
-                        rows: rows,
-                      )),
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                dataRowMaxHeight: double.infinity,
+                dataRowMinHeight: 60,
+                columns: columns, // Define your columns here
+                rows: rows,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+              child: Align(
+                child: FloatingActionButton(
+                  onPressed: () {
+                    generateExcelDocument(
+                      columns,
+                      widget.description,
+                      widget.unit,
+                      quantityControllers,
+                      materialQuantityControllers,
+                      laborHours1Controllers,
+                      customColumnControllers,
+                      laborHours2Controllers,
+                      laborCostControllers,
+                      material1Controllers,
+                      material2Controllers,
+                      totalPriceControllers,
+                    );
+                  },
+                  child: Text("Save"),
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(

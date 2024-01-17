@@ -57,6 +57,10 @@ class _ParquetLaminateItemsScreenState
   //
   List<TextEditingController> customColumnControllers = [];
 
+  void initialiseEmptyList() {
+    emptyCustomList = createList(widget.description.length);
+  }
+
   //used in Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
   double calculateCostPainting(int index) {
     double laborCost = widget.laborHours2[index];
@@ -224,6 +228,7 @@ class _ParquetLaminateItemsScreenState
       totalPriceControllers.add(TextEditingController());
       customColumnControllers.add(TextEditingController());
     }
+    initialiseEmptyList();
   }
 
   void setInitialValues() {
@@ -264,9 +269,6 @@ class _ParquetLaminateItemsScreenState
           label: Text(
               'Calculation Quantity')), //DataColumn(label: Text('Mengde')),
 
-      DataColumn(label: Text('Hourly Rate - Construction/Remodeling')),
-      //DataColumn(label: Text('Time pris. Ny bygg og ombygging.')),
-      DataColumn(label: Text('Hourly Rate - Demolition')),
       //DataColumn(label: Text('Time pris.Riving.')),
       DataColumn(label: Text('Hourly Rate - Painting')),
       // DataColumn(label: Text('Time pris.Maling. ')),
@@ -351,22 +353,6 @@ class _ParquetLaminateItemsScreenState
             },
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           )),
-          DataCell(
-            Container(
-              width: 200, // Set a fixed width or use flexible width
-              child: Text(
-                hourlyRateDemolition.toStringAsFixed(2),
-              ),
-            ),
-          ),
-          DataCell(
-            Container(
-              width: 200, // Set a fixed width or use flexible width
-              child: Text(
-                hourlyRatePainting.toStringAsFixed(2),
-              ),
-            ),
-          ),
           DataCell(
             Container(
               width: 200, // Set a fixed width or use flexible width

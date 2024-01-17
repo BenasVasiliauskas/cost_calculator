@@ -58,6 +58,10 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
   //
   List<TextEditingController> customColumnControllers = [];
 
+  void initialiseEmptyList() {
+    emptyCustomList = createList(widget.description.length);
+  }
+
   //used in Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling / Sparkling strip, stain p.1, joint p.2, full p.1, primer. 2 coats of paint
   //also used in 2 strøk beis, utvendig	/ 2 coats of stain, exterior
   double calculateCostPainting(int index) {
@@ -66,7 +70,6 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
   }
 
   double calculateMaterialQuantity(int index) {
-    emptyCustomList = createList(widget.description.length);
     double quantity = widget.quantity[index];
     return quantity * calculationQuantity;
   }
@@ -227,6 +230,7 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
       totalPriceControllers.add(TextEditingController());
       customColumnControllers.add(TextEditingController());
     }
+    initialiseEmptyList();
   }
 
   void setInitialValues() {

@@ -47,6 +47,10 @@ class _KitchenItemScreenState extends State<KitchenItemScreen> {
   List<TextEditingController> material2Controllers = [];
   List<TextEditingController> totalPriceControllers = [];
 
+  void initialiseEmptyList() {
+    emptyCustomList = createList(widget.description.length);
+  }
+
   //
   TextEditingController quantityCalculationControllers =
       TextEditingController();
@@ -222,6 +226,7 @@ class _KitchenItemScreenState extends State<KitchenItemScreen> {
       totalPriceControllers.add(TextEditingController());
       customColumnControllers.add(TextEditingController());
     }
+    initialiseEmptyList();
   }
 
   void setInitialValues() {
@@ -264,10 +269,7 @@ class _KitchenItemScreenState extends State<KitchenItemScreen> {
 
       DataColumn(label: Text('Hourly Rate - Construction/Remodeling')),
       //DataColumn(label: Text('Time pris. Ny bygg og ombygging.')),
-      DataColumn(label: Text('Hourly Rate - Demolition')),
-      //DataColumn(label: Text('Time pris.Riving.')),
-      DataColumn(label: Text('Hourly Rate - Painting')),
-      // DataColumn(label: Text('Time pris.Maling. ')),
+
       DataColumn(label: Text('Unit')),
       //DataColumn(label: Text('Enhet')),
     ];
@@ -349,22 +351,6 @@ class _KitchenItemScreenState extends State<KitchenItemScreen> {
             },
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           )),
-          DataCell(
-            Container(
-              width: 200, // Set a fixed width or use flexible width
-              child: Text(
-                hourlyRateDemolition.toStringAsFixed(2),
-              ),
-            ),
-          ),
-          DataCell(
-            Container(
-              width: 200, // Set a fixed width or use flexible width
-              child: Text(
-                hourlyRatePainting.toStringAsFixed(2),
-              ),
-            ),
-          ),
           DataCell(
             Container(
               width: 200, // Set a fixed width or use flexible width

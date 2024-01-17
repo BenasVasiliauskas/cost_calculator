@@ -59,6 +59,10 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   //
   List<TextEditingController> customColumnControllers = [];
 
+  void initialiseEmptyList() {
+    emptyCustomList = createList(widget.description.length);
+  }
+
   //used in Sparkling strimmel, flekksp.1, skjøtsp. 2, helsp.1, grunning. 2 strøk maling
   double calculateCostPainting(int index) {
     double laborCost = widget.laborHours2[index];
@@ -66,7 +70,6 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
   }
 
   double calculateMaterialQuantity(int index) {
-    emptyCustomList = createList(widget.description.length);
     double quantity = widget.quantity[index];
     return quantity * calculationQuantity;
   }
@@ -227,6 +230,7 @@ class _InteriorWallItemsScreenState extends State<InteriorWallItemsScreen> {
       totalPriceControllers.add(TextEditingController());
       customColumnControllers.add(TextEditingController());
     }
+    initialiseEmptyList();
   }
 
   void setInitialValues() {
