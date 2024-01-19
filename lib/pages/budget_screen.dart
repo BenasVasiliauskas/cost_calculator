@@ -10,6 +10,8 @@ class BudgetScreen extends StatefulWidget {
 }
 
 class _BudgetScreenState extends State<BudgetScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,25 +27,49 @@ class _BudgetScreenState extends State<BudgetScreen> {
         },
       ),
       body: SingleChildScrollView(
-        child: DataTable(
-          columns: [
-            DataColumn(label: Text('Name')),
-            DataColumn(label: Text('Total Hours')),
-            DataColumn(label: Text('Labor Costs')),
-            DataColumn(label: Text('Material Costs')),
-            DataColumn(label: Text('Budget Sum')),
-          ],
-          rows: List.generate(calculatedNamesOrder.length, (index) {
-            return DataRow(
-              cells: [
-                DataCell(Center(child: Text(calculatedNamesOrder[index]))),
-                DataCell(Text(totalHours[index].toStringAsFixed(2))),
-                DataCell(Text(totalLaborCosts[index].toStringAsFixed(2))),
-                DataCell(Text(totalMaterialCosts[index].toStringAsFixed(2))),
-                DataCell(Text(budgetSums[index].toStringAsFixed(2))),
-              ],
-            );
-          }),
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+          child: DataTable(
+            columns: [
+              DataColumn(label: Text('Name')),
+              DataColumn(label: Text('Total Hours')),
+              DataColumn(label: Text('Labor Costs')),
+              DataColumn(label: Text('Material Costs')),
+              DataColumn(label: Text('Budget Sum')),
+            ],
+            rows: List.generate(calculatedNamesOrder.length, (index) {
+              return DataRow(
+                cells: [
+                  DataCell(
+                    Center(
+                      child: Text(calculatedNamesOrder[index]),
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      totalHours[index].toStringAsFixed(2),
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      totalLaborCosts[index].toStringAsFixed(2),
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      totalMaterialCosts[index].toStringAsFixed(2),
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      budgetSums[index].toStringAsFixed(2),
+                    ),
+                  ),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );
