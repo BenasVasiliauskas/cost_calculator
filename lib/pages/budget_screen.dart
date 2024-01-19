@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:cost_calculator/constants/budget_constants.dart';
 import 'package:cost_calculator/widgets/custom_drawer.dart';
-import 'package:flutter/material.dart';
 
 import '../constants/language.dart';
 
@@ -24,18 +24,26 @@ class _BudgetScreenState extends State<BudgetScreen> {
           });
         },
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Variable 1: $budgetSum1'),
-            Text('Variable 2: $budgetSum2'),
-            Text('Variable 3: $budgetSum3'),
-            Text('Variable 4: $budgetSum4'),
-            Text('Variable 5: $budgetSum5'),
-            Text('Variable 6: $budgetSum6'),
-            FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
+      body: SingleChildScrollView(
+        child: DataTable(
+          columns: [
+            DataColumn(label: Text('Name')),
+            DataColumn(label: Text('Total Hours')),
+            DataColumn(label: Text('Labor Costs')),
+            DataColumn(label: Text('Material Costs')),
+            DataColumn(label: Text('Budget Sum')),
           ],
+          rows: List.generate(calculatedNamesOrder.length, (index) {
+            return DataRow(
+              cells: [
+                DataCell(Center(child: Text(calculatedNamesOrder[index]))),
+                DataCell(Text(totalHours[index].toStringAsFixed(2))),
+                DataCell(Text(totalLaborCosts[index].toStringAsFixed(2))),
+                DataCell(Text(totalMaterialCosts[index].toStringAsFixed(2))),
+                DataCell(Text(budgetSums[index].toStringAsFixed(2))),
+              ],
+            );
+          }),
         ),
       ),
     );

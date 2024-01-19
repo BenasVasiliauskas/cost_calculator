@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import '../../constants/innerwall_constants.dart';
+import '../../constants/norw_budget_constants.dart';
 import '../../functions/create_worksheet.dart';
 
 class NorwKitchentemsScreen extends StatefulWidget {
@@ -617,6 +618,18 @@ class _NorwKitchentemsScreenState extends State<NorwKitchentemsScreen> {
       totalTotalPrice += widget.totalPrice[i];
     }
 
+    if (customColumn) {
+      addHours(widget.name, totalLaborHours1);
+      addLaborCosts(widget.name, emptyCustomList.sum);
+      addMaterialCosts(widget.name, totalMaterial2);
+      addBudgetSum(widget.name, totalTotalPrice);
+    } else {
+      addHours(widget.name, totalLaborHours1);
+      addLaborCosts(widget.name, totalLaborCost);
+      addMaterialCosts(widget.name, totalMaterial2);
+      addBudgetSum(widget.name, totalTotalPrice);
+    }
+
 // Create the "Total Sum" row
     DataRow totalSumRow = DataRow(
       cells: [
@@ -712,6 +725,7 @@ class _NorwKitchentemsScreenState extends State<NorwKitchentemsScreen> {
                 child: FloatingActionButton(
                   onPressed: () {
                     generateExcelDocument(
+                      "Kjøkken",
                       columns,
                       widget.description,
                       widget.unit,

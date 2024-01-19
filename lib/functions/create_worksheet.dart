@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 Future<void> generateExcelDocument(
+  String excelName,
   List<DataColumn> columns,
   List<String> descriptionList,
   List<String> unitList,
@@ -88,11 +89,12 @@ Future<void> generateExcelDocument(
   range1.autoFit();
 
   final List<int> bytes = workbook.saveAsStream();
-  File('Output.xlsx').writeAsBytes(bytes);
+  File(excelName + ".xlsx").writeAsBytes(bytes);
   workbook.dispose();
 }
 
 Future<void> generateNorwExcelDocument(
+  String excelName,
   List<DataColumn> columns,
   List<String> descriptionList,
   List<String> unitList,
@@ -180,6 +182,6 @@ Future<void> generateNorwExcelDocument(
       '0,0';
 
   final List<int> bytes = workbook.saveAsStream();
-  File('OutputNorw.xlsx').writeAsBytes(bytes);
+  File("norw" + excelName + ".xlsx").writeAsBytes(bytes);
   workbook.dispose();
 }

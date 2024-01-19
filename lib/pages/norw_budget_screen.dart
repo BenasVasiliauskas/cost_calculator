@@ -1,20 +1,20 @@
-import 'package:cost_calculator/constants/budget_constants.dart';
-import 'package:cost_calculator/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:cost_calculator/constants/norw_budget_constants.dart';
+import 'package:cost_calculator/widgets/custom_drawer.dart';
 
 import '../constants/language.dart';
 
-class BudgetScreen extends StatefulWidget {
+class NorwBudgetScreen extends StatefulWidget {
   @override
-  State<BudgetScreen> createState() => _BudgetScreenState();
+  State<NorwBudgetScreen> createState() => _NorwBudgetScreenState();
 }
 
-class _BudgetScreenState extends State<BudgetScreen> {
+class _NorwBudgetScreenState extends State<NorwBudgetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Budget Screen'),
+        title: Text('Budsjettskjermen'),
       ),
       drawer: CustomDrawer(
         languageEnglish: languageEnglish,
@@ -24,17 +24,26 @@ class _BudgetScreenState extends State<BudgetScreen> {
           });
         },
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Variable 1: $budgetSum1'),
-            Text('Variable 2: $budgetSum2'),
-            Text('Variable 3: $budgetSum3'),
-            Text('Variable 4: $budgetSum4'),
-            Text('Variable 5: $budgetSum5'),
-            Text('Variable 6: $budgetSum6'),
+      body: SingleChildScrollView(
+        child: DataTable(
+          columns: [
+            DataColumn(label: Text('Name')),
+            DataColumn(label: Text('Totalt antall timer')),
+            DataColumn(label: Text('Arbeidskostnader')),
+            DataColumn(label: Text('Materialkostnade')),
+            DataColumn(label: Text('Budsjettsum')),
           ],
+          rows: List.generate(calculatedNamesOrder.length, (index) {
+            return DataRow(
+              cells: [
+                DataCell(Center(child: Text(calculatedNamesOrder[index]))),
+                DataCell(Text(totalHours[index].toStringAsFixed(2))),
+                DataCell(Text(totalLaborCosts[index].toStringAsFixed(2))),
+                DataCell(Text(totalMaterialCosts[index].toStringAsFixed(2))),
+                DataCell(Text(budgetSums[index].toStringAsFixed(2))),
+              ],
+            );
+          }),
         ),
       ),
     );

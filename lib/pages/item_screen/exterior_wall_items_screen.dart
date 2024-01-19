@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/budget_constants.dart';
 import '../../constants/innerwall_constants.dart';
 import 'package:collection/collection.dart';
 import 'package:cost_calculator/functions/create_worksheet.dart';
@@ -665,6 +666,18 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
       totalTotalPrice += widget.totalPrice[i];
     }
 
+    if (customColumn) {
+      addHours(widget.name, totalLaborHours1);
+      addLaborCosts(widget.name, emptyCustomList.sum);
+      addMaterialCosts(widget.name, totalMaterial2);
+      addBudgetSum(widget.name, totalTotalPrice);
+    } else {
+      addHours(widget.name, totalLaborHours1);
+      addLaborCosts(widget.name, totalLaborCost);
+      addMaterialCosts(widget.name, totalMaterial2);
+      addBudgetSum(widget.name, totalTotalPrice);
+    }
+
 // Create the "Total Sum" row
     DataRow totalSumRow = DataRow(
       cells: [
@@ -766,6 +779,7 @@ class _ExteriorWallItemsScreenState extends State<ExteriorWallItemsScreen> {
                 child: FloatingActionButton(
                   onPressed: () {
                     generateExcelDocument(
+                      "ExteriorWallItems",
                       columns,
                       widget.description,
                       widget.unit,

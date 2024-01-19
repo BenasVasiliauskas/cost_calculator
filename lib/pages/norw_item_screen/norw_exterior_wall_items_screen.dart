@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../constants/innerwall_constants.dart';
 import 'package:collection/collection.dart';
+import '../../constants/norw_budget_constants.dart';
 import '../../functions/create_worksheet.dart';
 
 class NorwExteriorWallItemsScreen extends StatefulWidget {
@@ -659,6 +660,18 @@ class _NorwExteriorWallItemsScreenState
       totalTotalPrice += widget.totalPrice[i];
     }
 
+    if (customColumn) {
+      addHours(widget.name, totalLaborHours1);
+      addLaborCosts(widget.name, emptyCustomList.sum);
+      addMaterialCosts(widget.name, totalMaterial2);
+      addBudgetSum(widget.name, totalTotalPrice);
+    } else {
+      addHours(widget.name, totalLaborHours1);
+      addLaborCosts(widget.name, totalLaborCost);
+      addMaterialCosts(widget.name, totalMaterial2);
+      addBudgetSum(widget.name, totalTotalPrice);
+    }
+
 // Create the "Total Sum" row
     DataRow totalSumRow = DataRow(
       cells: [
@@ -760,6 +773,7 @@ class _NorwExteriorWallItemsScreenState
                 child: FloatingActionButton(
                   onPressed: () {
                     generateExcelDocument(
+                      "Yttervegger",
                       columns,
                       widget.description,
                       widget.unit,

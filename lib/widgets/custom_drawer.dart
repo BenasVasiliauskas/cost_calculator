@@ -7,6 +7,7 @@ import '../pages/exterior_wall_screen.dart';
 import '../pages/interior_wall_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/norw_budget_screen.dart';
 import '../pages/windows_exterior_door_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -121,7 +122,10 @@ class CustomDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) {
-                    return BudgetScreen();
+                    if (languageEnglish == false)
+                      return NorwBudgetScreen();
+                    else
+                      return BudgetScreen();
                   },
                 ),
               );
