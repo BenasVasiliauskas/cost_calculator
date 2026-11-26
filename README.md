@@ -1,16 +1,7 @@
-# cost_calculator
+## Features
+- Estimates construction costs from user input [e.g. area, materials, etc.] using a custom formula
+- Lets users save results/files to their device, using Android runtime permissions
 
-"A new Flutter project."
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tech
+- Flutter / Dart
+- Object-oriented structure 
